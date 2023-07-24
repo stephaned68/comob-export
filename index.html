@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Export Chroniques Mobiles</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-9 col-sm-12 col-xs-12">
+          <h1 class="m-3 text-center text-secondary">
+            Export Chroniques Mobiles
+          </h1>
+          <p>
+            Cet outil permet d'interroger l'API Chroniques Mobiles pour en
+            récupérer les données relative à un profil de personnage dans l'un
+            des univers de Chroniques Oubliées et les importer dans une fiche de
+            personnage sur Roll20.
+          </p>
+          <div class="accordion mb-3" id="helpText">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="false"
+                  aria-controls="collapseOne"
+                >
+                  <i class="bi bi-info-circle"></i>&nbsp;Instructions
+                  d'utilisation :
+                </button>
+              </h2>
+              <div
+                id="collapseOne"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingOne"
+                data-bs-parent="#helpText"
+              >
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col">
+                      <ul>
+                        <li>
+                          Sélectionnez l'univers puis le profil souhaité, l'outil
+                          charge automatiquement les voies par défaut du profil
+                        </li>
+                        <li>
+                          Sélectionnez d'autres voies si nécessaires dans les listes
+                          déroulantes
+                        </li>
+                        <li>
+                          Cliquez sur le bouton copier, le code JSON est stocké dans
+                          le presse-papier
+                        </li>
+                        <li>
+                          Dans la partie Roll20, ouvrez la fiche de personnage et
+                          sélectionnez l'onglet Configuration
+                        </li>
+                        <li>
+                          Cliquez sur "Importer profil", collez (Ctrl+V) le texte
+                          dans le champ
+                        </li>
+                        <li>Cliquez sur le bouton d'import, et voila !</li>
+                      </ul>
+                    </div>
+                    <div class="col">
+                      Vous pouvez aussi installer cette application en tant qu'extension pour Google Chrome.
+                      <ul>
+                        <li>
+                          Cliquez <a href="./chrome-ext/comob-export.zip">ici</a> pour télécharger le ZIP
+                        </li>
+                        <li>
+                          Dézippez le fichier dans un répertoire de votre choix
+                        </li>
+                        <li>
+                          Accédez aux extensions Chrome
+                        </li>
+                        <li>
+                          Activez le mode développeur <img src="./chrome-ext/chrome-dev.png" alt="Mode développeur">
+                        </li>
+                        <li>
+                          Cliquez sur <img src="./chrome-ext/chrome-dir.png" alt="Charger extension non empaquetée"> puis sélectionnez le répertoire précédemment créé
+                        </li>
+                        <li>
+                          Cliquez sur l'icone <img src="./chrome-ext/chrome-ext.png" alt="Extensions"> puis sur <img src="./chrome-ext/chrome-pin.png" alt="Epingler"> pour épingler l'extension dans la barre
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="alerts" class="row justify-content-center"></div>
+      <div class="row justify-content-center">
+        <div class="col-9 mb-2">
+          <div class="row mr-3">
+            <div class="col-1">
+              <label for="universe" class="col-form-label"
+                >Univers :&nbsp;</label
+              >
+            </div>
+            <div class="col-2">
+              <select class="form-select" id="universe"></select>
+            </div>
+            <div class="col-1">
+              <label for="profile" class="col-form-label">Profil :&nbsp;</label>
+            </div>
+            <div class="col-2">
+              <select class="form-select" id="profile"></select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="voiesDiv">
+        <div class="row justify-content-center mb-2">
+          <div class="col-3">
+            <label
+              for="voie1"
+              id="voie1nom"
+              class="col-form-label voie-nom"
+            ></label
+            ><br />
+            <select
+              class="col-6 form-select-sm path-select"
+              data-id="1"
+              id="voie1"
+            ></select>
+          </div>
+          <div class="col-3">
+            <label
+              for="voie2"
+              id="voie2nom"
+              class="col-form-label voie-nom"
+            ></label
+            ><br />
+            <select
+              class="col-6 form-select-sm path-select"
+              data-id="2"
+              id="voie2"
+            ></select>
+          </div>
+          <div class="col-3">
+            <label
+              for="voie3"
+              id="voie3nom"
+              class="col-form-label voie-nom"
+            ></label
+            ><br />
+            <select
+              class="col-6 form-select-sm path-select"
+              data-id="3"
+              id="voie3"
+            ></select>
+          </div>
+        </div>
+        <div class="row justify-content-center mb-2">
+          <div class="col-3">
+            <label
+              for="voie4"
+              id="voie4nom"
+              class="col-form-label voie-nom"
+            ></label
+            ><br />
+            <select
+              class="col-6 form-select-sm path-select"
+              data-id="4"
+              id="voie4"
+            ></select>
+          </div>
+          <div class="col-3">
+            <label
+              for="voie5"
+              id="voie5nom"
+              class="col-form-label voie-nom"
+            ></label
+            ><br />
+            <select
+              class="col-6 form-select-sm path-select"
+              data-id="5"
+              id="voie5"
+            ></select>
+          </div>
+          <div class="col-3">
+            <label
+              for="voie6"
+              id="voie6nom"
+              class="col-form-label voie-nom"
+            ></label
+            ><br />
+            <select
+              class="col-6 form-select-sm path-select"
+              data-id="6"
+              id="voie6"
+            ></select>
+          </div>
+        </div>
+        <div class="row justify-content-center mb-2">
+          <div class="col-3">
+            <label
+              for="voie7"
+              id="voie7nom"
+              class="col-form-label voie-nom"
+            ></label
+            ><br />
+            <select
+              class="col-6 form-select-sm path-select"
+              data-id="7"
+              id="voie7"
+            ></select>
+          </div>
+          <div class="col-3">
+            <label
+              for="voie8"
+              id="voie8nom"
+              class="col-form-label voie-nom"
+            ></label
+            ><br />
+            <select
+              class="col-6 form-select-sm path-select"
+              data-id="8"
+              id="voie8"
+            ></select>
+          </div>
+          <div class="col-3">
+            <label
+              for="voie9"
+              id="voie9nom"
+              class="col-form-label voie-nom"
+            ></label
+            ><br />
+            <select
+              class="col-6 form-select-sm path-select"
+              data-id="9"
+              id="voie9"
+            ></select>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-9">
+          <div class="row mt-3">
+            <div class="col">
+              Voies :
+              <textarea
+                class="form-control mb-2"
+                id="json_char"
+                rows="10"
+                wrap="soft"
+                readonly
+              ></textarea>
+            </div>
+            <div class="col">
+              Equipement :
+              <textarea
+                class="form-control mb-2"
+                id="json_gear"
+                rows="10"
+                wrap="soft"
+                readonly
+              ></textarea>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="copy">
+            <i class="bi bi-clipboard"></i>&nbsp;Copier
+          </button>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    ></script>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{
+    "name": "Export CoMob",
+    "version": "1.1.0",
+    "description": "Export COMob Data",
+    "manifest_version": 3,
+    "author": "Stephane Devouard",
+    "action":{
+        "default_popup": "popup.html",
+        "default_title": "Export COMob"
+    },
+    "icons": {
+        "32": "dice.png",
+        "96": "dice.png"
+  }
+}
