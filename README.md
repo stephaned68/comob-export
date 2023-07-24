@@ -5,6 +5,7 @@ A web app to query the COMob API and export its data
 ## Usage
 
 The data exported to the clipboard can be pasted in a Roll20 COC or COG character sheet.
+
 The character sheet will generate ability trees and gears list with the JSON data.
 
 ### Current version : 1.1.0
