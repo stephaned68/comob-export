@@ -14,7 +14,7 @@ The character sheet will generate ability trees and gears list with the JSON dat
 
 ### 2023-07-30 - Version 1.2.0
 
-- Added export of profile attack scores and initiative bonus
+- Added export of profile's attack scores and initiative bonus
 
 ### 2023-07-24 - Version 1.1.0
 
