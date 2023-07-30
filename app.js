@@ -64,7 +64,9 @@ function loadProfileData() {
   })[0];
   const result = {
     profile: profileInfo.nom,
+    familyId: profileInfo.famille.id,
     family: profileInfo.famille.libelle,
+    combat: profileInfo.combat !== null ? profileInfo.combat.split(",") : [],
     paths: [],
   };
   getData(`${API_URL}/abilities/${universe}/?profile=${profile}`, (data) => {
@@ -255,7 +257,7 @@ function onPathChanged(e) {
 /**
  * Main process
  */
-document.querySelector("h1")?.title=`Version ${version}`;
+document.querySelector("h1").title=`Version ${version}`;
 
 getData(`${API_URL}/datasets?all=1`, (data) => {
   $universe.appendChild(createElement("option", "Choisir...", { value: "" }));
