@@ -2,7 +2,7 @@ import { getData } from "./functions/api.js";
 
 import { createElement, clearContent, flash } from "./functions/dom.js";
 
-const version = "1.1.0"
+const version = "1.2.0"
 
 const $universe = document.querySelector("#universe");
 const $profile = document.querySelector("#profile");
