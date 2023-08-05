@@ -8,9 +8,13 @@ The data exported to the clipboard can be pasted in a Roll20 COC or COG characte
 
 The character sheet will generate ability trees and gears list with the JSON data.
 
-### Current version : 1.2.0
+### Current version : 1.2.1
 
 ## Change Log
+
+### 2023-08-05 - Version 1.2.1
+
+- Changed the copy to clipboard function to async/await
 
 ### 2023-07-30 - Version 1.2.0
 

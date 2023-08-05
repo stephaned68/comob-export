@@ -2,7 +2,7 @@ import { getData } from "./functions/api.js";
 
 import { createElement, clearContent, flash } from "./functions/dom.js";
 
-const version = "1.2.0"
+const version = "1.2.1"
 
 const $universe = document.querySelector("#universe");
 const $profile = document.querySelector("#profile");
@@ -206,19 +206,17 @@ function onProfileChanged(e) {
   document.querySelectorAll(".path-select").forEach(loadPathSelect);
 }
 
-function onCopyClicked(e) {
-  let copyData;
-  if (!navigator.clipboard) {
-    $json_char.select();
-    document.execCommand("copy");
-  } else {
-    copyData = {
+async function onCopyClicked(e) {
+  try {
+    const copyData = {
       character: JSON.parse($json_char.innerHTML),
       gears: JSON.parse($json_gear.innerHTML),
-    }
-    navigator.clipboard.writeText(JSON.stringify(copyData));
+    };
+    await navigator.clipboard.writeText(JSON.stringify(copyData));
+    flash("Profil JSON copié vers le presse-papier", "success");
+  } catch (err) {
+    flash("Erreur de copie vers le presse-papier. Essayez en https://", "warning");
   }
-  flash("Profil JSON copié vers le presse-papier", "success");
 }
 
 function onPathChanged(e) {
