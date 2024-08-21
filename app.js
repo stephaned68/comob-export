@@ -1,4 +1,4 @@
-import { getData } from "./functions/api.js";
+import { getData, getActionTypes } from "./functions/api.js";
 
 import { createElement, clearContent, flash } from "./functions/dom.js";
 
@@ -16,6 +16,14 @@ let profileList = [];
 
 const voieInfo = {
   cof: [
+    { title: "Profil" },
+    { title: "Profil" },
+    { title: "Profil" },
+    { title: "Profil" },
+    { title: "Profil" },
+    { title: "Prestige" },
+  ],
+  cof2: [
     { title: "Profil" },
     { title: "Profil" },
     { title: "Profil" },
@@ -73,12 +81,18 @@ function loadProfileData() {
     const temp = {};
     data.forEach((ability) => {
       const path = ability.voie;
+      const { limitedUse, spell, actionType } = getActionTypes(ability);
       const rank = {
         name: ability.capacite,
         description: ability.description,
-        limitedUse: ability.limitee === 1 ? " (L)" : "",
-        spell: ability.sort === 1 ? "*" : "",
+        limitedUse,
+        spell,
+        actionType,
         deladu: ability.voie_deladu,
+        uses: {
+          number: ability.utilisations,
+          per: ability.frequence || ""
+        }
       };
       if (!temp.hasOwnProperty(path)) {
         temp[path] = [];
@@ -171,24 +185,22 @@ function loadPathSelect($path) {
   // path types
   getData(`${API_URL}/types/paths/${$universe.value}`, (data) => {
     data.forEach((type) => {
-      if (!type.type_voie_config) {
-        let optgroup = createElement("optgroup", null, {
-          label: type.type_voie_intitule,
-        });
-        // typed paths
-        getData(
-          `${API_URL}/paths/${$universe.value}/?type=${type.type_voie}`,
-          (data) => {
-            data.forEach((path) => {
-              const option = createElement("option", path.nom, {
-                value: path.voie.trim(),
-              });
-              optgroup.appendChild(option);
+      let optgroup = createElement("optgroup", null, {
+        label: type.type_voie_intitule,
+      });
+      // typed paths
+      getData(
+        `${API_URL}/paths/${$universe.value}/?type=${type.type_voie}`,
+        (data) => {
+          data.forEach((path) => {
+            const option = createElement("option", path.nom, {
+              value: path.voie.trim(),
             });
-          }
-        );
-        $path.appendChild(optgroup);
-      }
+            optgroup.appendChild(option);
+          });
+        }
+      );
+      $path.appendChild(optgroup);
     });
     loadProfileData();
   });
@@ -240,11 +252,17 @@ function onPathChanged(e) {
       full: `Voie ${data[0].voie_deladu}${name}`,
     };
     data.forEach((ability) => {
+      const { limitedUse, spell, actionType } = getActionTypes(ability);
       path.abilities.push({
         name: ability.nom,
         description: ability.description,
-        limitedUse: ability.limitee + "",
-        spell: ability.sort + "",
+        limitedUse,
+        spell,
+        actionType,
+        uses: {
+          number: ability.utilisations,
+          by: ability.frequence || ""
+        }
       });
     });
     jsonData.paths[pathId - 1] = path;

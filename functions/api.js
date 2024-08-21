@@ -14,6 +14,28 @@ export function getData(url, callback, options = {}) {
     );
 }
 
+export function getActionTypes(ability) {
+  let result = {
+    limitedUse: "",
+    spell: "",
+    actionType: ""
+  };
+  result.limitedUse = ability.limitee === 1 ? " (L)" : "";
+  result.spell = ability.sort === 1 ? "*" : "";
+  switch (ability.action) {
+    case 1:
+      result.actionType = " (G)";
+      break;
+    case 2:
+      result.actionType = " (M)";
+      break;
+    case 3:
+      result.actionType = " (A)";
+      break;
+  }
+  return result;
+}
+
 let apiURL;
 if (
   document.location.hostname == "127.0.0.1" ||
