@@ -113,6 +113,7 @@ function loadProfileData() {
     });
     getData(`${API_URL}/paths/${universe}/${profile}`, (data) => {
       data.forEach((path, ix) => {
+        if (ix > 8) return;
         document.querySelector(`#voie${ix + 1}`).value = path.voie;
         result.paths.push(paths.filter((p) => p.name === path.nom)[0]);
       });
