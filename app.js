@@ -2,7 +2,7 @@ import { getData, getActionTypes } from "./functions/api.js";
 
 import { createElement, clearContent, flash } from "./functions/dom.js";
 
-const version = "1.3.0"
+const version = "1.4.0"
 
 const $universe = document.querySelector("#universe");
 const $profile = document.querySelector("#profile");
@@ -24,6 +24,7 @@ const voieInfo = {
     { title: "Prestige" },
   ],
   cof2: [
+    { title: "Peuple" },
     { title: "Profil" },
     { title: "Profil" },
     { title: "Profil" },
@@ -114,7 +115,8 @@ function loadProfileData() {
     getData(`${API_URL}/paths/${universe}/${profile}`, (data) => {
       data.forEach((path, ix) => {
         if (ix > 8) return;
-        document.querySelector(`#voie${ix + 1}`).value = path.voie;
+        const shift = universe === "cof2" ? 2 : 1;
+        document.querySelector(`#voie${ix + shift}`).value = path.voie;
         result.paths.push(paths.filter((p) => p.name === path.nom)[0]);
       });
       $json_char.textContent = JSON.stringify(result);
