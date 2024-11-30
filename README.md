@@ -8,9 +8,13 @@ The data exported to the clipboard can be pasted in a Roll20 COF 2e, COC or COG 
 
 The character sheet will generate ability trees and gears list with the JSON data.
 
-### Current version : 1.4.0
+### Current version : 1.4.1
 
 ## Change Log
+
+### 2024-11-30 - Version 1.4.1
+
+- Corrected laoding of JSON for COF 2e
 
 ### 2024-11-29 - Version 1.4.0
 

@@ -2,7 +2,7 @@ import { getData, getActionTypes } from "./functions/api.js";
 
 import { createElement, clearContent, flash } from "./functions/dom.js";
 
-const version = "1.4.0"
+const version = "1.4.1"
 
 const $universe = document.querySelector("#universe");
 const $profile = document.querySelector("#profile");
@@ -30,6 +30,7 @@ const voieInfo = {
     { title: "Profil" },
     { title: "Profil" },
     { title: "Profil" },
+    { title: "Prestige" },
     { title: "Prestige" },
   ],
   coc: [{ title: "Profil" }, { title: "Profil" }, { title: "Profil" }],
@@ -112,6 +113,8 @@ function loadProfileData() {
       });
       paths.push(item);
     });
+    if (universe === "cof2")
+      result.paths.push({}); // voie 1 = peuple
     getData(`${API_URL}/paths/${universe}/${profile}`, (data) => {
       data.forEach((path, ix) => {
         if (ix > 8) return;
