@@ -1,6 +1,6 @@
 {
     "name": "Export CoMob",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "Export COMob Data",
     "manifest_version": 3,
     "author": "Stephane Devouard",
